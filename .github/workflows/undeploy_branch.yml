@@ -15,8 +15,7 @@ jobs:
       id: extract_branch
     - name: Undeploy gh-page
       run: |
-        git config --global user.name 'Github Action'
-        git config --global user.email 'github-action@users.noreply.github.com'
+        git fetch
         git checkout gh-pages
         if [ -d "staging/${{ steps.extract_branch.outputs.branch }}" ]; then
           git rm -r staging/${{ steps.extract_branch.outputs.branch }}

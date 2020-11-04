@@ -21,8 +21,7 @@ jobs:
       run: |
         gem install bundler
         bundle install
-        echo "baseurl: /jekyll-news-example/staging/${{ steps.extract_branch.outputs.branch }}" >> _config.yml
-        bundle exec jekyll build
+        bundle exec jekyll build -c _config.yml -b /jekyll-news-example/staging/${{ steps.extract_branch.outputs.branch }}
     - name: Deploy to gh-pages
       uses: JamesIves/github-pages-deploy-action@3.7.1
       with:
