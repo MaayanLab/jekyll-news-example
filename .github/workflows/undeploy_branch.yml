@@ -13,7 +13,7 @@ jobs:
         ref: gh-pages
     - name: Extract branch name
       shell: bash
-      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      run: REF="${{ github.event.ref }}" && echo "##[set-output name=branch;]$(echo ${REF#refs/heads/})"
       id: extract_branch
     - name: Undeploy gh-page
       run: |
