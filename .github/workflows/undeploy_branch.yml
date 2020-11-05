@@ -9,16 +9,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+        ref: gh-pages
     - name: Extract branch name
       shell: bash
       run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
       id: extract_branch
     - name: Undeploy gh-page
       run: |
-        git fetch
-        git checkout gh-pages
+        git config user.name github-actions
+        git config user.email github-actions@github.com
         if [ -d "staging/${{ steps.extract_branch.outputs.branch }}" ]; then
-          git rm -r staging/${{ steps.extract_branch.outputs.branch }}
+          rm -r staging/${{ steps.extract_branch.outputs.branch }}
+          git add --all .
           git commit -m "Auto undeploy ${{ steps.extract_branch.outputs.branch }}"
           git push
         else
